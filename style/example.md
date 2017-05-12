@@ -1,3 +1,6 @@
+## style files
+
+```javascript
 {
    "axes.facecolor":,
    "axes.edgecolor":,
@@ -32,3 +35,4 @@
    "font.family":,
    "font.sans-serif":,
 }
+```
