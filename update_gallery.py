@@ -14,12 +14,6 @@ here = path.abspath(path.dirname(__file__))
 
 THUMB_FMT = 'png'
 
-DEFAULT_SETTINGS = {
-    'context': 'notebook',
-    'style': 'white',
-    'palette': 'deep'
-}
-
 
 def find_all(type):
     entries = []
@@ -32,15 +26,16 @@ def find_all(type):
 
 
 def get_local(category, name):
-    settings = DEFAULT_SETTINGS
+    settings = inshore.DEFAULT_SETTINGS.copy()
     for type in ('context', 'style', 'palette'):
         fp = os.path.join(here, type, category, name)
         if path.exists(fp):
             with open(fp, 'r') as f:
+                s = inshore.utils.remove_comments(f.read())
                 try:
-                    settings[type] = json.load(f)
+                    settings[type] = json.loads(s)
                 except json.JSONDecodeError as e:
-                    print('Invalid {} file {}/{}:\n {}'.format(type, category, name, e.msg))
+                    print('Invalid {} file {}/{} [{}:{}]:\n {}'.format(type, category, name, e.lineno, e.colno, e.msg))
     return settings
 
 
@@ -56,12 +51,11 @@ def main():
     print('Found {:d} entries'.format(len(entries)))
 
     for category, name in entries:
+        # temporarily apply custom style
         s = get_local(category, name)
-        # apply custom style
         sns.set(**s)
         # create plot
         sinplot()
-
         # set figure title
         name = name.replace('.json', '')
         full_name = '{0}/{1}'.format(category, name)
@@ -71,13 +65,16 @@ def main():
         context: {1}, style: {2}, palette: {3}
         """
 
-        context = full_name if isinstance(s['context'], dict) else '{} (default)'.format(DEFAULT_SETTINGS['context'])
-        style = full_name if isinstance(s['style'], dict) else '{} (default)'.format(DEFAULT_SETTINGS['style'])
-        palette = full_name if isinstance(s['palette'], dict) else '{} (default)'.format(DEFAULT_SETTINGS['palette'])
+        fallback = inshore.DEFAULT_SETTINGS
+
+        context = full_name if isinstance(s['context'], dict) else '(default)'
+        style = full_name if isinstance(s['style'], dict) else '(default)'
+        palette = full_name if isinstance(s['palette'], dict) else '(default)'
         desc = thumb.format(full_name, context, style, palette)
         fig_path = path.join(here, 'gallery', '{0}_{1}.{2}'.format(category, name, THUMB_FMT))
 
-        plt.tight_layout()
+        plt.title(desc)
+        # plt.tight_layout()
         # save figure to ./gallery
         plt.savefig(fig_path)
 

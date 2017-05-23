@@ -3,6 +3,12 @@ REPO_URL = "https://github.com/scruffy-t/inshore/"
 BASE_URL = "https://raw.githubusercontent.com/scruffy-t/inshore/master/"
 DATA_URL = BASE_URL + "{type}/{category}/{name}.json"
 
+DEFAULT_SETTINGS = {
+    'context': 'notebook',
+    'style': 'white',
+    'palette': 'deep'
+}
+
 
 from .get import get
 from .deploy import deploy

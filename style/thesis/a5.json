@@ -31,5 +31,5 @@
    "image.cmap": "viridis",
 
    "font.family": "sans-serif",
-   "font.sans-serif": "Arial"
+   "font.sans-serif": ["Helvetica", "Arial", "DejaVu Sans", "Bitstream Vera Sans", "Lucida Grande", "Verdana", "Geneva", "Lucid", "Avant Garde", "sans-serif"]
 }
