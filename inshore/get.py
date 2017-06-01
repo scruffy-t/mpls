@@ -55,6 +55,7 @@ def get(name, category='paper', type=('context', 'style', 'palette'), defaults=N
                 settings[t] = __get(name, category, t)
             except OSError:
                 pass
+        return settings
     elif isinstance(type, str) and type in ('context', 'style', 'palette'):
         return __get(name, category, type)
     raise ValueError('the type argument must either be a tuple/list or a str')
