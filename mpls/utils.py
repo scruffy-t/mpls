@@ -1,4 +1,7 @@
 import re
+import os
+
+from .config import DATA_BASE_URL
 
 
 def remove_comments(text):
@@ -19,3 +22,17 @@ def remove_comments(text):
         else: # otherwise, we will return the 1st group
             return match.group(1) # captured quoted-string
     return regex.sub(_replacer, text)
+
+
+def all_styles(stylelib=DATA_BASE_URL):
+    """
+    """
+    styles = []
+    for category in os.scandir(stylelib):
+        if category.is_dir():
+            for name in os.scandir(os.path.join(stylelib, category.path)):
+                if name.is_file() and name.path.endswith('.json'):
+                    cat = os.path.basename(category.path)
+                    style = os.path.basename(name.path).split('.')[0]
+                    styles.append((cat, style))
+    return set(styles)

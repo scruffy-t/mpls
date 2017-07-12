@@ -1,6 +1,5 @@
 .DS_Store
 .idea/
-doc/
 __pycache__
 *.pyc
 *.egg-info

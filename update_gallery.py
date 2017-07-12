@@ -1,82 +1,54 @@
 """
 """
 
+import matplotlib as mpl
 import matplotlib.pyplot as plt
-import seaborn as sns
-import inshore
+import mpls
 import json
 import os
+import shutil
 import numpy as np
 
-from os import path
-
-here = path.abspath(path.dirname(__file__))
-
-THUMB_FMT = 'png'
-
-
-def find_all(type):
-    entries = []
-    for category in os.scandir(path.join(here, type)):
-        if category.is_dir():
-            for name in os.scandir(path.join(here, type, category.path)):
-                if name.is_file() and name.path.endswith('.json'):
-                    entries.append((path.basename(category.path), path.basename(name.path)))
-    return entries
+here = os.path.abspath(os.path.dirname(__file__))
+stylelib = os.path.join(here, 'stylelib')
+gallery = os.path.join(here, 'gallery')
+data_url = os.path.join(stylelib, '{category}/{name}.{type}.json')
 
 
-def get_local(category, name):
-    settings = inshore.DEFAULT_SETTINGS.copy()
-    for type in ('context', 'style', 'palette'):
-        fp = os.path.join(here, type, category, name)
-        if path.exists(fp):
-            with open(fp, 'r') as f:
-                s = inshore.utils.remove_comments(f.read())
-                try:
-                    settings[type] = json.loads(s)
-                except json.JSONDecodeError as e:
-                    print('Invalid {} file {}/{} [{}:{}]:\n {}'.format(type, category, name, e.lineno, e.colno, e.msg))
-    return settings
-
-
-def sinplot(flip=1):
+def sinplot(ax, flip=1):
     x = np.linspace(0, 14, 100)
     for i in range(1, 7):
-        plt.plot(x, np.sin(x + i * .5) * (7 - i) * flip)
+        ax.plot(x, np.sin(x + i * .5) * (7 - i) * flip)
 
 
 def main():
-    # collect inshore context, palette, and styles
-    entries = set(find_all('context')+find_all('style')+find_all('palette'))
-    print('Found {:d} entries'.format(len(entries)))
+
+    print('Cleaning up gallery ...')
+    shutil.rmtree(gallery)
+    os.mkdir(gallery)
+
+    print('Collecting styles ...')
+    entries = mpls.utils.all_styles(stylelib)
+    print('Generating thumbnails for {0:d} styles ...'.format(len(entries)))
 
     for category, name in entries:
-        # temporarily apply custom style
-        s = get_local(category, name)
-        sns.set(**s)
-        # create plot
-        sinplot()
-        # set figure title
-        name = name.replace('.json', '')
-        full_name = '{0}/{1}'.format(category, name)
+        # create category folders if necessary
+        cat_dir = os.path.join(gallery, category)
+        if not os.path.exists(cat_dir):
+            os.mkdir(cat_dir)
 
-        thumb = """
-        {0}
-        context: {1}, style: {2}, palette: {3}
-        """
+        fig_path = os.path.join(here, 'gallery', category, '{}.{}'.format(name, mpls.config.THUMB_FMT))
 
-        fallback = inshore.DEFAULT_SETTINGS
+        with mpls.context(name, category, data_url=data_url):
+            f = plt.figure()
+            ax1 = f.add_subplot(111)
+            # create plots
+            sinplot(ax1)
+            f.tight_layout()
+            # save figure to gallery
+            f.savefig(fig_path)
 
-        context = full_name if isinstance(s['context'], dict) else '(default)'
-        style = full_name if isinstance(s['style'], dict) else '(default)'
-        palette = full_name if isinstance(s['palette'], dict) else '(default)'
-        desc = thumb.format(full_name, context, style, palette)
-        fig_path = path.join(here, 'gallery', '{0}_{1}.{2}'.format(category, name, THUMB_FMT))
-
-        plt.title(desc)
-        # plt.tight_layout()
-        # save figure to ./gallery
-        plt.savefig(fig_path)
+    print('Done')
 
 
 if __name__ == '__main__':

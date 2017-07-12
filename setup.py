@@ -2,7 +2,7 @@ from setuptools import setup
 from codecs import open
 from os import path
 
-from inshore import __version__
+from mpls import __version__
 
 here = path.abspath(path.dirname(__file__))
 
@@ -13,7 +13,7 @@ def readme():
 
 
 setup(
-    name='inshore',
+    name='mpls',
     version=__version__,
     description='An open library of matplotlib styles',
     long_description=readme(),
@@ -30,18 +30,12 @@ setup(
         'Programming Language :: Python :: 3.6'
     ],
 
-    keywords='plotting matplotlib seaborn',
-    url='https://github.com/scruffy-t/inshore',
+    keywords='plotting matplotlib styles',
+    url='https://github.com/scruffy-t/mpls',
     author='Tobias Schruff',
     author_email='tobias.schruff@gmail.com',
     license='BSD',
-    packages=['inshore'],
-
-    # we use "nose" for tests
-    # $ python setup.py test
-    # to execute the test suite
-    test_suite='nose.collector',
-    tests_require=['nose'],
+    packages=['mpls'],
 
     zip_safe=False
 )
