@@ -12,7 +12,7 @@
    "grid.linewidth": 0.5,
    "lines.linewidth": 1,
    "patch.linewidth": 1,
-   "lines.markersize": 12,
+   "lines.markersize": 4,
    "lines.markeredgewidth": 1,
 
    "xtick.major.width": 1,
