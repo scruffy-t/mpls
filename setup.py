@@ -2,7 +2,7 @@ from setuptools import setup
 from codecs import open
 from os import path
 
-from mpls import __version__
+from mpls.version import __version__
 
 here = path.abspath(path.dirname(__file__))
 

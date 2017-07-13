@@ -31,7 +31,6 @@
 
    "lines.solid_capstyle":,
 
-   "image.cmap":,
    "font.family":,
    "font.sans-serif":,
 }

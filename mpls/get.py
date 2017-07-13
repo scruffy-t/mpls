@@ -4,7 +4,7 @@ import re
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from os.path import join as pjoin
-from urllib.request import urlopen
+from urllib.request import urlopen, HTTPError
 
 from .utils import remove_comments
 from .config import REPO_URL, DATA_URL, MPLS_TYPES
@@ -21,6 +21,13 @@ def __get(name, category, type, **kwargs):
         f = urlopen(data_url)
         # get file content from specified url
         content = remove_comments(f.read().decode())
+    except HTTPError as e:
+        raise MPLSNotFoundError(
+            type=type,
+            data_url=data_url,
+            err_msg=e.msg,
+            repo_url=repo_url
+        )
     except ValueError:
         try:
             f = open(data_url)
@@ -43,7 +50,7 @@ def __get(name, category, type, **kwargs):
     return context
 
 
-def get(name, category, type=None, **kwargs):
+def get(name, category='', type=None, **kwargs):
     """
 
     Parameters
@@ -78,6 +85,9 @@ def get(name, category, type=None, **kwargs):
     else:
         raise ValueError('The type argument must either be a tuple/list, str, or None')
 
+    if len(rcparams) == 0:
+        raise MPLSNotFoundError()
+
     # color palette hack
     if rcparams.get('axes.prop_cycle'):
         rcparams['axes.prop_cycle'] = mpl.rcsetup.cycler('color', rcparams['axes.prop_cycle'])
@@ -85,13 +95,13 @@ def get(name, category, type=None, **kwargs):
     return rcparams
 
 
-def use(name, category, type=None, **kwargs):
+def use(name, category='', type=None, **kwargs):
     """
     """
     return plt.style.use(get(name, category, type, **kwargs))
 
 
-def context(name, category, type=None, **kwargs):
+def context(name, category='', type=None, **kwargs):
     """
     """
     return plt.style.context(get(name, category, type, **kwargs))
