@@ -1,10 +1,10 @@
 {
    "axes.facecolor": "w",
    "axes.edgecolor": "k",
+   "axes.labelcolor": "k",
+
    "axes.grid": false,
    "axes.axisbelow": "line",
-   "axes.linewidth": 0.8,
-   "axes.labelcolor": "k",
 
    "figure.facecolor": "w",
 
@@ -14,13 +14,10 @@
    "text.color": "k",
 
    "xtick.color": "k",
-   "ytick.color": "k",
    "xtick.direction": "out",
+
+   "ytick.color": "k",
    "ytick.direction": "out",
-   "xtick.major.size": 3.5,
-   "ytick.major.size": 3.5,
-   "xtick.minor.size": 2,
-   "ytick.minor.size": 2,
 
    "legend.frameon": false,
    "legend.numpoints": 1,

@@ -1,0 +1,8 @@
+{
+  "rwth-thesis": {
+    "context": "a5",
+    "style": "rwth-a5",
+    "palette": "rwth-ci",
+    "caption": "A style for A5 sized theses at RWTH Aachen University"
+  }
+}

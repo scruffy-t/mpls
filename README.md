@@ -24,16 +24,15 @@ A list of scientific journal name abbreviations can be found here:
 ## Examples
 
 ```python
-
 import matplotlib.pyplot as plt
 import mpls
 
-mpls.use('a4', 'thesis')
+mpls.use(context='a4', style='thesis', palette='seaborn')
 
 # create some plot
 ...
 
-with mpls.context('a4-landscape', 'thesis', type='context'):
+with mpls.temp(context='a4-landscape'):
    # temporarily switch to A4 landscape format
    ...
 
