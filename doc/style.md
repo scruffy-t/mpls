@@ -1,5 +1,6 @@
-## style files
+# Style
 
+## Example file
 ```javascript
 {
    "axes.facecolor":,

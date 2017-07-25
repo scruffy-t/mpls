@@ -19,7 +19,7 @@ setup(
     long_description=readme(),
 
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'License :: OSI Approved :: BSD License',
 
         'Programming Language :: Python :: 3',
@@ -34,7 +34,7 @@ setup(
     url='https://github.com/scruffy-t/mpls',
     author='Tobias Schruff',
     author_email='tobias.schruff@gmail.com',
-    license='BSD',
+    license='BSD (3-clause)',
     packages=['mpls'],
 
     zip_safe=False

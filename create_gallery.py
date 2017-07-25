@@ -53,7 +53,7 @@ def main(stylelib, gallery):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('stylelib', type=str)
-    parser.add_argument('gallery', type=str)
+    parser.add_argument('--stylelib', type=str, default='stylelib')
+    parser.add_argument('--gallery', type=str, default='gallery')
     args = parser.parse_args()
     main(args.stylelib, args.gallery)
