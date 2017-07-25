@@ -2,7 +2,7 @@ from setuptools import setup
 from codecs import open
 from os import path
 
-from mpls.version import __version__
+from mpls import __version__
 
 here = path.abspath(path.dirname(__file__))
 
@@ -32,10 +32,11 @@ setup(
 
     keywords='plotting matplotlib styles',
     url='https://github.com/scruffy-t/mpls',
+    download_url='https://github.com/scruffy-t/mpls/archive/{}.tar.gz'.format(__version__),
     author='Tobias Schruff',
     author_email='tobias.schruff@gmail.com',
     license='BSD (3-clause)',
     packages=['mpls'],
-
+    install_requires=['matplotlib'],
     zip_safe=False
 )

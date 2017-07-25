@@ -1,3 +1,5 @@
+"""
+"""
 from urllib.request import urlopen, HTTPError
 
 from .utils import remove_comments
@@ -25,7 +27,6 @@ def __get(name, stype, **kwargs):
     - stylelib_url: str
 
     - ignore_cache: bool
-
 
     Raises
     ------
@@ -78,6 +79,8 @@ def get(name, stype, **kwargs):
 
     stype: str
 
+    kwargs:
+    -
 
     Raises
     ------
@@ -100,6 +103,20 @@ def get(name, stype, **kwargs):
 
 
 def rc(context=None, style=None, palette=None, **kwargs):
+    """
+
+    Parameters
+    ----------
+    context: str
+
+    style: str
+
+    palette: str
+
+    kwargs:
+    -
+
+    """
     params = {}
     if context:
         params.update(get(context, 'context', **kwargs))
@@ -166,5 +183,4 @@ def temp(*args, context=None, style=None, palette=None, **kwargs):
     # apply specified matplotlib styles and reset if specified
     styles = list(args)
     styles.append(rc(context=context, style=style, palette=palette, **kwargs))
-    return mpl.style.context(styles, after_reset=kwargs.get('reset'))
-
+    return mpl.style.context(styles, after_reset=kwargs.get('reset', False))

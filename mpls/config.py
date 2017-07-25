@@ -25,11 +25,11 @@ except OSError:
     logger.debug('using default config')
 
 
-def __configure_logging():
+def __configure():
     if CONFIG['enable_logging']:
         logging.basicConfig(level=logging.DEBUG)
 
-__configure_logging()
+__configure()
 
 
 def configure(save=False, **kwargs):
@@ -40,11 +40,16 @@ def configure(save=False, **kwargs):
     save: bool
         Save config to file after it was updated
     kwargs:
+    - stylelib_url: str
+
+    - enable_cache: bool
+
+    - enable_logging: bool
 
     """
     CONFIG.update(kwargs)
 
-    __configure_logging()
+    __configure()
 
     if save:
         if not os.path.exists(CONFIG_DIR):

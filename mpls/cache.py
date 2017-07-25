@@ -52,7 +52,7 @@ CACHE = Cache(CACHE_DIR)
 def clear_cache():
     """Clears the complete file cache.
 
-    Can be useful if the underlying style file has changed but an old version is still
+    Can be useful if the original style file has changed but an old version is still
     available in the cache. Alternatively you can call any of the frontend methods
     (get, use, temp) with the optional `ignore_cache` parameter.
     """
