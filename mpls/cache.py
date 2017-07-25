@@ -42,7 +42,8 @@ class Cache(object):
 
     def clear(self):
         logger.debug('cleaning up cache dir: {}'.format(self.cache_dir))
-        shutil.rmtree(self.cache_dir)
+        if os.path.exists(self.cache_dir):
+            shutil.rmtree(self.cache_dir, ignore_errors=True)
 
 
 CACHE = Cache(CACHE_DIR)
