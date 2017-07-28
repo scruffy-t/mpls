@@ -1,0 +1,16 @@
+{
+   "bases": [
+      {
+         "type": "context",
+         "name": "a5-gr",
+         "scale": 2,
+         "flip": false
+      },
+      {
+         "type": "palette",
+         "name": "rwth-ci",
+         "desaturate": 0.5,
+         "revert": false
+      }
+   ]
+}
