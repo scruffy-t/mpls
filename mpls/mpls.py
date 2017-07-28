@@ -4,7 +4,7 @@ from urllib.request import urlopen, URLError, HTTPError
 
 from .utils import remove_comments
 from .cache import CACHE
-from .config import CONFIG, MPLS_typeS
+from .config import CONFIG, MPLS_TYPES
 
 import json
 import matplotlib as mpl
@@ -108,7 +108,7 @@ def get(name, type, **kwargs):
     type = str(type)
 
     params = {}
-    if type in MPLS_typeS:
+    if type in MPLS_TYPES:
         params.update(__get(name, type, **kwargs))
     else:
         raise ValueError('unexpected type: {}! Must be any of {!r}'.format(type, MPLS_typeS))

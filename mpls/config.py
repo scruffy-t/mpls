@@ -4,7 +4,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-MPLS_STYPES = ('context', 'style', 'palette')
+MPLS_TYPES = ('context', 'style', 'palette')
 
 CONFIG_DIR = os.path.expanduser('~/.mpls')
 CONFIG_FILE = os.path.join(CONFIG_DIR, 'config.json')
