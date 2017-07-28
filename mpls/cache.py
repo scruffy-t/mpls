@@ -17,20 +17,20 @@ class Cache(object):
         if CONFIG['auto_clear_cache']:
             self.clear()
 
-    def file_path(self, stype, name):
-        return os.path.join(self.host_folder(CONFIG['stylelib_url']), CONFIG['stylelib_format'].format(stype=stype, name=name))
+    def file_path(self, type, name):
+        return os.path.join(self.host_folder(CONFIG['stylelib_url']), CONFIG['stylelib_format'].format(type=type, name=name))
 
     def host_folder(self, host_url):
         return os.path.join(self.cache_dir, hashlib.sha1(host_url.encode()).hexdigest())
 
-    def is_cached(self, stype, name):
-        return os.path.exists(self.file_path(stype, name))
+    def is_cached(self, type, name):
+        return os.path.exists(self.file_path(type, name))
 
-    def add(self, stype, name, content):
-        if self.is_cached(stype, name):
+    def add(self, type, name, content):
+        if self.is_cached(type, name):
             return
 
-        path = self.file_path(stype, name)
+        path = self.file_path(type, name)
         dir_path = os.path.dirname(path)
         if not os.path.exists(dir_path):
             os.makedirs(dir_path)
@@ -41,7 +41,7 @@ class Cache(object):
         except OSError:
             pass
 
-        logger.debug('added {} file "{}" to cache'.format(stype, name))
+        logger.debug('added {} file "{}" to cache'.format(type, name))
 
     def clear(self, host_url=None):
         if not host_url:

@@ -4,7 +4,7 @@ from urllib.request import urlopen, URLError, HTTPError
 
 from .utils import remove_comments
 from .cache import CACHE
-from .config import CONFIG, MPLS_STYPES
+from .config import CONFIG, MPLS_typeS
 
 import json
 import matplotlib as mpl
@@ -14,14 +14,14 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def __get(name, stype, **kwargs):
+def __get(name, type, **kwargs):
     """
 
     Parameters
     ----------
     name: str
 
-    stype: str
+    type: str
 
     kwargs:
     - style_url: str
@@ -41,11 +41,11 @@ def __get(name, stype, **kwargs):
     """
     folder    = kwargs.get('stylelib_url', CONFIG['stylelib_url'])
     file_path = kwargs.get('stylelib_format', CONFIG['stylelib_format'])
-    style_url = kwargs.get('style_url', folder+file_path).format(stype=stype, name=name)
+    style_url = kwargs.get('style_url', folder+file_path).format(type=type, name=name)
 
-    if not kwargs.get('ignore_cache', False) and CACHE.is_cached(stype, name):
-        logger.debug('loading {} file from cache'.format(stype))
-        with open(CACHE.file_path(stype=stype, name=name), 'r') as f:
+    if not kwargs.get('ignore_cache', False) and CACHE.is_cached(type, name):
+        logger.debug('loading {} file from cache'.format(type))
+        with open(CACHE.file_path(type=type, name=name), 'r') as f:
             content = remove_comments(f.read())
     else:
         try:
@@ -53,8 +53,8 @@ def __get(name, stype, **kwargs):
             with urlopen(style_url) as f:
                 # get file content from specified url
                 content = remove_comments(f.read().decode())
-            logger.debug('loaded raw {} file from URL'.format(stype))
-            CACHE.add(stype, name, content)
+            logger.debug('loaded raw {} file from URL'.format(type))
+            CACHE.add(type, name, content)
         except ValueError as e:  # style_url is not a valid url
             logger.debug('urlopen failed: {}'.format(str(e)))
             logger.debug('trying to (regular) open file')
@@ -62,7 +62,7 @@ def __get(name, stype, **kwargs):
                 with open(style_url) as f:
                     # get file content from file path instead
                     content = remove_comments(f.read())
-                logger.debug('loaded file from local disk'.format(stype))
+                logger.debug('loaded file from local disk'.format(type))
             except IOError:
                 raise
         except HTTPError as e:
@@ -80,14 +80,14 @@ def __get(name, stype, **kwargs):
         raise
 
 
-def get(name, stype, **kwargs):
-    """Returns the rcParams specified in the style file given by `name` and `stype`.
+def get(name, type, **kwargs):
+    """Returns the rcParams specified in the style file given by `name` and `type`.
 
     Parameters
     ----------
     name: str
         The name of the style.
-    stype: str
+    type: str
         Any of ('context', 'style', 'palette').
     kwargs:
     - stylelib_url: str
@@ -98,20 +98,20 @@ def get(name, stype, **kwargs):
     Raises
     ------
     ValueError:
-        If `stype` is not any of ('context', 'style', 'palette')
+        If `type` is not any of ('context', 'style', 'palette')
 
     Returns
     -------
     rcParams: dict
         The parameter dict of the file.
     """
-    stype = str(stype)
+    type = str(type)
 
     params = {}
-    if stype in MPLS_STYPES:
-        params.update(__get(name, stype, **kwargs))
+    if type in MPLS_typeS:
+        params.update(__get(name, type, **kwargs))
     else:
-        raise ValueError('unexpected stype: {}! Must be any of {!r}'.format(stype, MPLS_STYPES))
+        raise ValueError('unexpected type: {}! Must be any of {!r}'.format(type, MPLS_typeS))
 
     # color palette hack
     if params.get('axes.prop_cycle'):

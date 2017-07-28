@@ -10,7 +10,7 @@ CONFIG_DIR = os.path.expanduser('~/.mpls')
 CONFIG_FILE = os.path.join(CONFIG_DIR, 'config.json')
 CONFIG = {
     'stylelib_url': "https://raw.githubusercontent.com/scruffy-t/mpls/master/stylelib/",
-    'stylelib_format': "{stype}/{name}.json",
+    'stylelib_format': "{type}/{name}.json",
     'auto_clear_cache': False,
     'enable_logging': False
 }
