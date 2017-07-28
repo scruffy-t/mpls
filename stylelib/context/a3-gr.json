@@ -1,0 +1,35 @@
+{
+   // A3 with 2 inch margins
+   "figure.figsize": [9.7, 6.0],
+
+   // fonts
+   "font.size": 16,
+   "axes.labelsize": 16,
+   "legend.fontsize": 16,
+   "axes.titlesize": 16,
+
+   "xtick.labelsize": 14,
+   "ytick.labelsize": 14,
+
+   // lines
+   "axes.linewidth": 1.5,
+   "grid.linewidth": 1.0,
+   "lines.linewidth": 2.0,
+   "patch.linewidth": 2.0,
+
+   // markers
+   "lines.markersize": 4,
+   "lines.markeredgewidth": 1,
+
+   // ticks
+   "xtick.major.size": 3.5,
+   "xtick.major.width": 1,
+   "xtick.minor.size": 2,
+   "xtick.minor.width": 1,
+   "xtick.major.pad": 3.5,
+   "ytick.major.size": 3.5,
+   "ytick.minor.size": 2,
+   "ytick.major.width": 1,
+   "ytick.minor.width": 1,
+   "ytick.major.pad": 3.5
+}

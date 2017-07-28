@@ -3,6 +3,7 @@ from .config import CACHE_DIR, CONFIG
 import os
 import shutil
 import logging
+import hashlib
 
 logger = logging.getLogger(__name__)
 
@@ -13,17 +14,19 @@ class Cache(object):
         self.cache_dir = cache_dir
 
     def __del__(self):
-        self.clear()
+        if CONFIG['auto_clear_cache']:
+            self.clear()
 
     def file_path(self, stype, name):
-        return os.path.join(self.cache_dir, CONFIG['stylelib_url'].format(type=stype, name=name))
+        return os.path.join(self.host_folder(CONFIG['stylelib_url']), CONFIG['stylelib_format'].format(stype=stype, name=name))
+
+    def host_folder(self, host_url):
+        return os.path.join(self.cache_dir, hashlib.sha1(host_url.encode()).hexdigest())
 
     def is_cached(self, stype, name):
         return os.path.exists(self.file_path(stype, name))
 
     def add(self, stype, name, content):
-        if not CONFIG['enable_cache']:
-            return
         if self.is_cached(stype, name):
             return
 
@@ -40,20 +43,26 @@ class Cache(object):
 
         logger.debug('added {} file "{}" to cache'.format(stype, name))
 
-    def clear(self):
-        logger.debug('cleaning up cache dir: {}'.format(self.cache_dir))
-        if os.path.exists(self.cache_dir):
-            shutil.rmtree(self.cache_dir, ignore_errors=True)
+    def clear(self, host_url=None):
+        if not host_url:
+            clean_up_dir = self.cache_dir
+        else:
+            clean_up_dir = self.host_folder(host_url)
+
+        logger.debug('cleaning up cache for stylelib host: {}'.format(host_url))
+        if os.path.exists(clean_up_dir):
+            shutil.rmtree(clean_up_dir, ignore_errors=True)
 
 
 CACHE = Cache(CACHE_DIR)
 
 
-def clear_cache():
-    """Clears the complete file cache.
+def clear_cache(host_url=None):
+    """Clears the file cache of the specified host or the complete cache if host_url is
+    not specified.
 
     Can be useful if the original style file has changed but an old version is still
     available in the cache. Alternatively you can call any of the frontend methods
     (get, use, temp) with the optional `ignore_cache` parameter.
     """
-    CACHE.clear()
+    CACHE.clear(host_url)

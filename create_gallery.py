@@ -11,6 +11,8 @@ import numpy as np
 
 THUMB_FMT = '.png'
 
+here = os.path.dirname(__file__)
+
 
 def sinplot(ax, flip=1):
     x = np.linspace(0, 14, 100)
@@ -35,6 +37,8 @@ def main(stylelib, gallery):
     print('Collecting styles ...')
     entries = json.load(open(gallery_file))
     print('Generating thumbnails for {:d} styles ...'.format(len(entries)))
+
+    mpls.configure(stylelib_dir=os.path.join(here, 'stylelib/'))
 
     for name, style in entries.items():
         fig_path = os.path.join(gallery, name+THUMB_FMT)

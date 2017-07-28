@@ -1,8 +1,42 @@
 {
-  "rwth-thesis": {
-    "context": "a5",
-    "style": "rwth-a5",
+  "rwth-a5": {
+    "context": "a5-gr",
+    "style": "rwth-ci",
     "palette": "rwth-ci",
-    "caption": "A style for A5 sized theses at RWTH Aachen University"
-  }
+    "caption": "A style for A5 sized content at RWTH Aachen University"
+   },
+
+     "rwth-a4": {
+       "context": "a4-gr",
+       "style": "rwth-ci",
+       "palette": "rwth-ci",
+       "caption": "A style for A4 sized content at RWTH Aachen University"
+   },
+
+     "rwth-a3": {
+       "context": "a3-gr",
+       "style": "rwth-ci",
+       "palette": "rwth-ci",
+       "caption": "A style for A3 sized content at RWTH Aachen University"
+   },
+
+     "rwth-a2": {
+       "context": "a2-gr",
+       "style": "rwth-ci",
+       "palette": "rwth-ci",
+       "caption": "A style for A2 sized content at RWTH Aachen University"
+   },
+   "rwth-a1": {
+     "context": "a1-gr",
+     "style": "rwth-ci",
+     "palette": "rwth-ci",
+     "caption": "A style for A1 sized content at RWTH Aachen University"
+   },
+
+   "rwth-a0": {
+     "context": "a0-gr",
+     "style": "rwth-ci",
+     "palette": "rwth-ci",
+     "caption": "A style for A0 sized content at RWTH Aachen University"
+   }
 }
